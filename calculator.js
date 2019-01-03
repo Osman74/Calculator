@@ -7,6 +7,10 @@ var isCalculated = false
 
 function factorial(num)
 {
+    if(num < 0) {
+        return
+    }
+
     var res = 1
     while(num != 0)
     {
@@ -19,7 +23,7 @@ function factorial(num)
 function disabled(op) {
     if (digits == "" && !((op >= "0" && op <= "9") || op == "."))
         return true
-    else if (op == '=' && previousOperator.length != 1)
+    else if (op == '=' && previousOperator.length < 1)
         return true
     else if (op == "." && digits.toString().search(/\./) != -1) {
         return true
@@ -33,9 +37,14 @@ function disabled(op) {
 function digitPressed(op)
 {
     if (disabled(op))
+    {
+        console.log("disabled")
         return
+    }
     if (digits.toString().length >= display.maxDigits)
         return
+    if(op == "π")
+        op = Math.PI
     if (lastOp.toString().length == 1 && ((lastOp >= "0" && lastOp <= "9") || lastOp == ".") ) {
         digits = digits + op.toString()
         if(!isCalculated)
@@ -71,9 +80,12 @@ function operatorPressed(op)
         digits = Number(curVal) * Number(digits.valueOf())
     } else if (previousOperator == "÷") {
         digits = Number(curVal) / Number(digits.valueOf())
+    } else if (previousOperator == "xʸ") {
+         digits = Math.pow(Number(curVal), Number(digits.valueOf()))
     }
 
-    if (op == "+" || op == "-" || op == "×" || op == "÷") {
+
+    if (op == "+" || op == "-" || op == "×" || op == "÷" || op == "xʸ") {
         previousOperator = op
         curVal = digits.valueOf()
         digits = "0"
@@ -84,6 +96,7 @@ function operatorPressed(op)
     if (op == "=") {
         display.setDigit(digits)
         isCalculated = true
+        console.log("=")
     }
 
     curVal = 0
@@ -98,7 +111,6 @@ function operatorPressed(op)
     if (op == ".") {
         if(!digits.toString().search(/./) && !isCalculated)
         {
-            console.log("!")
             digits += "."
             display.appendDigit(op.toString())
             isCalculated = false
@@ -106,8 +118,8 @@ function operatorPressed(op)
         }
     }
 
-    if (op == "sinh") {
-        digits = Number(Math.sinh(digits.valueOf()))
+    if (op == "asin") {
+        digits = Number(Math.asin(digits.valueOf()))
         display.setDigit(digits)
         isCalculated = true
     }
@@ -130,8 +142,8 @@ function operatorPressed(op)
         isCalculated = true
     }
 
-    if (op == "cosh") {
-        digits = Number(Math.cosh(digits.valueOf()))
+    if (op == "acos") {
+        digits = Number(Math.acos(digits.valueOf()))
         display.setDigit(digits)
         isCalculated = true
     }
@@ -143,7 +155,7 @@ function operatorPressed(op)
     }
 
     if (op == "ln") {
-        digits = Number(Math.ln(digits.valueOf()))
+        digits = Number(Math.log(digits.valueOf()))
         display.setDigit(digits)
         isCalculated = true
     }
@@ -154,8 +166,8 @@ function operatorPressed(op)
         isCalculated = true
     }
 
-    if (op == "tanh") {
-        digits = Number(Math.tanh(digits.valueOf()))
+    if (op == "atan") {
+        digits = Number(Math.atan(digits.valueOf()))
         display.setDigit(digits)
         isCalculated = true
     }
@@ -167,7 +179,7 @@ function operatorPressed(op)
     }
 
     if (op == "log") {
-        digits = Number(Math.log(digits.valueOf()))
+        digits = Number(Math.log(digits.valueOf())/ Math.log(10))
         display.setDigit(digits)
         isCalculated = true
     }
@@ -183,6 +195,12 @@ function operatorPressed(op)
         display.setDigit(digits)
         isCalculated = true
     }
+    if (op == "1/x") {
+        digits = Number(1/digits.valueOf())
+        display.setDigit(digits)
+        isCalculated = true
+    }
+
     // Reset the state on 'C' operator or after
     // an error occurred
     if (op == "C" || display.isError) {

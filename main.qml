@@ -188,7 +188,7 @@ ApplicationWindow {
         columns : 8
         spacing: 1
         CalcButton {
-            text: "sinh"
+            text: "asin"
         }
         CalcButton {
             text: "sin"
@@ -212,7 +212,7 @@ ApplicationWindow {
             text: "×"
         }
         CalcButton {
-            text: "cosh"
+            text: "acos"
         }
         CalcButton {
             text: "cos"
@@ -236,7 +236,7 @@ ApplicationWindow {
             text: "-"
         }
         CalcButton {
-            text: "tanh"
+            text: "atan"
         }
         CalcButton {
             text: "tan"
@@ -269,7 +269,7 @@ ApplicationWindow {
             text: "∛x"
         }
         CalcButton {
-            text: "x^(1/y)"
+            text: "1/x"
         }
         CalcButton {
             text: "±"
@@ -282,6 +282,22 @@ ApplicationWindow {
         }
         CalcButton {
             text: "√"
+        }
+        CalcButton {
+            opacity: 0
+            enabled: false
+        }
+        CalcButton {
+            opacity: 0
+            enabled: false
+        }
+        CalcButton {
+            opacity: 0
+            enabled: false
+        }
+        CalcButton {
+            opacity: 0
+            enabled: false
         }
         CalcButton {
             text: "÷"

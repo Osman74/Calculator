@@ -14,10 +14,7 @@ Rectangle {
     function appendDigit(digit)
         {
             if(textItem.text != "0" || digit == ".") textItem.text += digit
-            else {
-                console.log("!!!")
-                textItem.text = digit
-            }
+            else textItem.text = digit
         }
 
         function setDigit(digit)
