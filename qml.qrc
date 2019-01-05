@@ -6,5 +6,9 @@
         <file>Display.qml</file>
         <file>calculator.js</file>
         <file>Calculator.png</file>
+        <file>SlideMenu.qml</file>
+        <file>Menu.png</file>
+        <file>Scientific.png</file>
+        <file>Simple.png</file>
     </qresource>
 </RCC>

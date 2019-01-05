@@ -33,49 +33,6 @@ ApplicationWindow {
             return 1
     }
 
-    Button {
-        id: simpleBttn
-        font{
-            pixelSize : 15
-        }
-        width: 120
-        height: 25
-        text: "Обычный"
-        onClicked: {
-            if(simpleCalc.x != 0)
-            {
-                simpleCalc.x = 0;
-                scientificCalc.x=-488
-                animateOpacity1.start()
-                animateOpacity2.start()
-                simpleBttn.font.pixelSize = 15
-                scientificBttn.font.pixelSize = 10
-            }
-
-        }
-    }
-    Button {
-        id: scientificBttn
-        font{
-            pixelSize : 10
-        }
-        x : 123
-        width: 120
-        height: 25
-        text: "Инженерный"
-        onClicked: {
-            if(scientificCalc.x != 0)
-            {
-                scientificCalc.x = 0;
-                simpleCalc.x=486
-                animateOpacity1.start()
-                animateOpacity2.start()
-                scientificBttn.font.pixelSize = 15
-                simpleBttn.font.pixelSize = 10
-            }
-        }
-    }
-
     Display {
         id : display
         y : 30
@@ -307,6 +264,123 @@ ApplicationWindow {
         }
         CalcButton {
             text: "="
+        }
+    }
+
+    Button {
+        id: menuOn
+        background: Rectangle { color : "gray" }
+        icon.name: "menu"
+        icon.source: "Menu.png"
+        icon.width : 30
+        icon.height : 30
+        width : 30
+        height : 30
+        Behavior on x {
+            SpringAnimation{
+                spring: 2.5
+                damping: 0.3
+            }
+        }
+        onClicked: {
+            animateOpacity.start()
+            if(menu.x == 0) {
+                menu.x = -180
+                x = 0
+            }
+            else {
+                menu.x = 0
+                x = 180
+            }
+        }
+    }
+
+    SlideMenu {
+        opacity: 0
+        id: menu
+        x : -180
+        Behavior on x {
+            SpringAnimation{
+                spring: 2.5
+                damping: 0.3
+            }
+        }
+        PropertyAnimation {id: animateOpacity; target: menu; properties: "opacity"; to: needOpacity(menu.opacity); duration: 200}
+        Grid {
+            x : parent.x + 30
+            rows: 2
+            columns : 1
+            spacing: 1
+            Button {
+                id: simpleBttn
+                background: Rectangle {
+                    id: bcgdSimple
+                    color : "lightgray"
+                }
+                font {
+                    pixelSize: 15
+                }
+                width: 150
+                height: 25
+                text: "Обычный"
+                MouseArea {
+                    id: mousearea1
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onHoveredChanged: {
+                        bcgdSimple.color = containsMouse ? "#ccc6c6" : "lightgray"
+                    }
+                    onClicked: {
+                        if(simpleCalc.x != 0)
+                        {
+                            simpleCalc.x = 0;
+                            scientificCalc.x=-488
+                            animateOpacity1.start()
+                            animateOpacity2.start()
+                        }
+                        animateOpacity.start()
+                        menu.x = -180
+                        menuOn.x = 0
+                }
+
+                }
+            }
+
+            Button {
+                id: scientificBttn
+                background: Rectangle {
+                    id: bcgdScientific
+                    color : "lightgray"
+                }
+                font {
+                    pixelSize: 15
+                }
+                x : 123
+                width: 150
+                height: 25
+                text: "Инженерный"
+                MouseArea {
+                    id: mousearea2
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onHoveredChanged: {
+                        bcgdScientific.color = containsMouse ? "#ccc6c6" : "lightgray"
+                    }
+                    onClicked: {
+                        if(scientificCalc.x != 0)
+                        {
+                            scientificCalc.x = 0;
+                            simpleCalc.x=486
+                            animateOpacity1.start()
+                            animateOpacity2.start()
+                        }
+                        animateOpacity.start()
+                        menu.x = -180
+                        menuOn.x = 0
+                    }
+                }
+            }
+
         }
     }
 }
